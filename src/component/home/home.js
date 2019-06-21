@@ -22,12 +22,16 @@ export default class home extends Component {
   _handleChange(event) {
     const data = event.target.value;
     const replace = data.replace(/\D/g, '');
-    if (!this._isNumber(replace)) {
+    if (!this._isNumber(data)) {
       this.setState({
-        show_err: !this.state.show_err
+        show_err: true
+      });
+    } else {
+      this.setState({
+        show_err: false,
+        amount: replace
       });
     }
-    this.setState({ amount: replace });
   }
 
   _isNumber(str) {
