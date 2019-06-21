@@ -1,8 +1,8 @@
 import React from 'react';
 import Layout from '../layout/layout';
 import { Switch, Route } from 'react-router-dom';
-import Home from '../component/home/home';
-import './App.css';
+import Home from '../component/Home/home';
+import './App.scss';
 
 function App() {
   return (

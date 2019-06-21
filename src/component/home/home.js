@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import Table from '../table/table';
+import Table from '../../hoc/Table/table';
+import './_home.scss';
 
 export default class home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rupiah: [100000, 50000, 20000, 10000, 5000, 1000, 500, 100, 50],
+      rupiah: [100000, 50000, 20000, 10000, 5000, 2000, 1000, 500, 100, 50],
       amount: null,
       list: [],
-      rest: null
+      rest: ''
     };
     this.handleChange = this._handleChange.bind(this);
     this.handleSubmit = this._handleSubmit.bind(this);
@@ -21,17 +22,18 @@ export default class home extends Component {
   }
 
   _formatIdr(money) {
-    const number_string = money.toString();
-    const split = number_string.split(',');
-    const rest = split[0].length % 3;
-    let rupiah = split[0].substr(0, rest);
-    const thousand = split[0].substr(rest).match(/\d{1,3}/gi);
+    let number_string = money.toString();
+    let split = number_string.split(',');
+    let rest = split[0].length % 3;
+    let rupiah = 'Rp' + split[0].substr(0, rest);
+    let thousand = split[0].substr(rest).match(/\d{1,3}/gi);
 
     if (thousand) {
-      const separator = rest ? '.' : '';
+      let separator = rest ? '.' : '';
       rupiah += separator + thousand.join('.');
     }
     rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+
     return rupiah;
   }
 
@@ -60,21 +62,23 @@ export default class home extends Component {
   }
 
   render() {
-    console.log(this.state.list);
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Ammount:
-            <input
-              type="text"
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-          </label>
+      <div className="home-page">
+        <h1 className="title">Pecahan Mata Uang</h1>
+        <form className="form" onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            value={this.state.value}
+            onChange={this.handleChange}
+            placeholder="jumlah uang"
+          />
           <input type="submit" value="Submit" />
         </form>
-        <Table data={this.state.amount} />
+        <Table
+          rest={this.state.rest}
+          list={this.state.list}
+          idr={e => this._formatIdr(e)}
+        />
       </div>
     );
   }

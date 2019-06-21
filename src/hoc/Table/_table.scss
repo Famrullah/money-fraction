@@ -1,0 +1,14 @@
+.list-money {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+
+    div {
+        margin: 5px 0;
+    }
+}
+
+.rest {
+    color: red;
+    text-align: center
+}

@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+
+$open-sans: 'Open Sans',
+sans-serif;
+// font
+$primary-text: (color: #666666,
+    font-size: 14px,
+    font-family:$open-sans);
+
+
+@mixin print-styles($map) {
+
+    @each $property,
+    $value in $map {
+        #{$property}: $value;
+    }
+}

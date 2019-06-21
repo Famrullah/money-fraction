@@ -1,0 +1,7 @@
+@import"../stylesheet/main.scss";
+
+.App {
+    @include print-styles($primary-text);
+    width: 500px;
+    margin: 0 auto;
+}
