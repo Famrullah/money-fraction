@@ -18,7 +18,9 @@ export default class home extends Component {
   }
 
   _handleChange(event) {
-    this.setState({ amount: event.target.value });
+    const data = event.target.value;
+    const replace = data.replace(/\D/g, '');
+    this.setState({ amount: replace });
   }
 
   _formatIdr(money) {
@@ -33,7 +35,6 @@ export default class home extends Component {
       rupiah += separator + thousand.join('.');
     }
     rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
-
     return rupiah;
   }
 
