@@ -13,12 +13,12 @@ const table = props => {
       {list.map((item, index) => {
         return (
           <div key={index} className="list-money">
-            <div className="list-money__fraction">  {idr(item.fraction)}</div>
+            <div className="list-money__fraction"> {idr(item.fraction)}</div>
             <div className="list-money__sheet">{item.sheet} Lembar</div>
           </div>
         );
       })}
-      <div className="rest">{renderList()}</div>
+      <div className="error">{renderList()}</div>
     </div>
   );
 };

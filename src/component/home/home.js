@@ -9,18 +9,30 @@ export default class home extends Component {
       rupiah: [100000, 50000, 20000, 10000, 5000, 2000, 1000, 500, 100, 50],
       amount: null,
       list: [],
-      rest: ''
+      rest: '',
+      show_err: false
     };
     this.handleChange = this._handleChange.bind(this);
     this.handleSubmit = this._handleSubmit.bind(this);
     this._calc = this._calc.bind(this);
+    this._isNumber = this._isNumber.bind(this);
     this._formatIdr = this._formatIdr.bind(this);
   }
 
   _handleChange(event) {
     const data = event.target.value;
     const replace = data.replace(/\D/g, '');
+    if (!this._isNumber(data)) {
+      this.setState({
+        show_err: !this.state.show_err
+      });
+    }
     this.setState({ amount: replace });
+  }
+
+  _isNumber(str) {
+    const pattern = /^\d+$/;
+    return pattern.test(str);
   }
 
   _formatIdr(money) {
@@ -74,6 +86,9 @@ export default class home extends Component {
             placeholder="jumlah uang"
           />
           <input type="submit" value="Submit" />
+          <p className="error">
+            {this.state.show_err ? 'Format Input Salah' : null}
+          </p>
         </form>
         <Table
           rest={this.state.rest}
