@@ -22,7 +22,7 @@ export default class home extends Component {
   _handleChange(event) {
     const data = event.target.value;
     const replace = data.replace(/\D/g, '');
-    if (!this._isNumber(data)) {
+    if (!this._isNumber(replace)) {
       this.setState({
         show_err: !this.state.show_err
       });
