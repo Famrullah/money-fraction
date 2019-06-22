@@ -13,7 +13,7 @@ export default class home extends Component {
       rest: '',
       show: true
     };
-    this.handleChange = this._handleChange.bind(this);
+    // this.handleChange = this._handleChange.bind(this);
     this.handleSubmit = this._handleSubmit.bind(this);
     this._calc = this._calc.bind(this);
     this._formatIdr = this._formatIdr.bind(this);
