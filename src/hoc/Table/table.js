@@ -5,7 +5,7 @@ const table = props => {
   const { idr, rest, list } = props;
   const renderList = () => {
     if (rest > 0) {
-      return <div>Sisa Rp.{idr(rest)} tidak ada pecahan</div>;
+      return <div>Sisa {idr(rest)} tidak ada pecahan</div>;
     }
   };
   return (

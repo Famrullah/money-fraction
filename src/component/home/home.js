@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Table from '../../hoc/Table/table';
+import CurrencyFormat from 'react-currency-format';
 import './_home.scss';
 
 export default class home extends Component {
@@ -7,36 +8,24 @@ export default class home extends Component {
     super(props);
     this.state = {
       rupiah: [100000, 50000, 20000, 10000, 5000, 2000, 1000, 500, 100, 50],
-      amount: null,
+      amount: '',
       list: [],
       rest: '',
-      show_err: false
+      show: true
     };
     this.handleChange = this._handleChange.bind(this);
     this.handleSubmit = this._handleSubmit.bind(this);
     this._calc = this._calc.bind(this);
-    this._isNumber = this._isNumber.bind(this);
     this._formatIdr = this._formatIdr.bind(this);
   }
 
   _handleChange(event) {
     const data = event.target.value;
     const replace = data.replace(/\D/g, '');
-    if (!this._isNumber(data)) {
-      this.setState({
-        show_err: true
-      });
-    } else {
-      this.setState({
-        show_err: false,
-        amount: replace
-      });
-    }
-  }
 
-  _isNumber(str) {
-    const pattern = /^\d+$/;
-    return pattern.test(str);
+    if (typeof data === 'string') {
+    }
+    this.setState({ amount: replace });
   }
 
   _formatIdr(money) {
@@ -83,16 +72,16 @@ export default class home extends Component {
       <div className="home-page">
         <h1 className="title">Pecahan Mata Uang</h1>
         <form className="form" onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            value={this.state.value}
-            onChange={this.handleChange}
-            placeholder="jumlah uang"
+          <CurrencyFormat
+            value={this.state.amount}
+            thousandSeparator={true}
+            prefix={'Rp'}
+            onValueChange={values => {
+              const { value } = values;
+              this.setState({ amount: value });
+            }}
           />
           <input type="submit" value="Submit" />
-          <p className="error">
-            {this.state.show_err ? 'Format Input Salah' : null}
-          </p>
         </form>
         <Table
           rest={this.state.rest}

@@ -26,6 +26,11 @@
             padding: 10px 20px;
             margin: 10px;
         }
+
+        .disabled {
+            opacity: 0.4;
+            cursor: not-allowed
+        }
     }
 
 }
