@@ -19,15 +19,6 @@ export default class home extends Component {
     this._formatIdr = this._formatIdr.bind(this);
   }
 
-  _handleChange(event) {
-    const data = event.target.value;
-    const replace = data.replace(/\D/g, '');
-
-    if (typeof data === 'string') {
-    }
-    this.setState({ amount: replace });
-  }
-
   _formatIdr(money) {
     let number_string = money.toString();
     let split = number_string.split(',');
