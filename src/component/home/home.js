@@ -23,13 +23,15 @@ export default class home extends Component {
     let data = event.target.value;
     const match = /rp./g;
     const results = data.match(match);
+    console.log(this._isNumber(data));
     if (results || this._isNumber(data)) {
-      const number = data.replace(/\D/g, '');
+      const number = data.replace(/rp./g, '');
       const space = /[^\s]/;
       if (!space.test(number)) {
         this.setState({
           show_err: true,
-          rest: ''
+          rest: '',
+          list: []
         });
       }
       if (this._isNumber(number)) {
@@ -40,14 +42,17 @@ export default class home extends Component {
       } else {
         this.setState({
           show_err: true,
-          rest: ''
+          rest: '',
+          amount: '',
+          list: []
         });
       }
     } else {
       this.setState({
         show_err: true,
         list: [],
-        rest: ''
+        rest: '',
+        amount: ''
       });
     }
   }
