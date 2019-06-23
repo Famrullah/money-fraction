@@ -17,44 +17,13 @@ export default class home extends Component {
     this._calc = this._calc.bind(this);
     this._formatIdr = this._formatIdr.bind(this);
     this._isNumber = this._isNumber.bind(this);
+    this._validation = this._validation.bind(this);
+    // this._isWhiteSpace = this._isWhiteSpace.bind(this);
   }
 
   _handleChange(event) {
-    let data = event.target.value;
-    const match = /rp./g;
-    const results = data.match(match);
-    console.log(this._isNumber(data));
-    if (results || this._isNumber(data)) {
-      const number = data.replace(/rp./g, '');
-      const space = /[^\s]/;
-      if (!space.test(number)) {
-        this.setState({
-          show_err: true,
-          rest: '',
-          list: []
-        });
-      }
-      if (this._isNumber(number)) {
-        this.setState({
-          show_err: false,
-          amount: number
-        });
-      } else {
-        this.setState({
-          show_err: true,
-          rest: '',
-          amount: '',
-          list: []
-        });
-      }
-    } else {
-      this.setState({
-        show_err: true,
-        list: [],
-        rest: '',
-        amount: ''
-      });
-    }
+    let data = event.target.value.toLowerCase();
+    this._validation(data);
   }
 
   _formatIdr(money) {
@@ -101,6 +70,35 @@ export default class home extends Component {
     this._calc();
   }
 
+  _validation(value) {
+    let data = value;
+    const match = /rp./g;
+    const results = data.match(match);
+    if (results || this._isNumber(data)) {
+      const number = data.replace(/rp./g, '');
+      if (this._isNumber(number)) {
+        this.setState({
+          show_err: false,
+          amount: number
+        });
+      } else {
+        this.setState({
+          show_err: true,
+          rest: '',
+          amount: '',
+          list: []
+        });
+      }
+    } else {
+      this.setState({
+        show_err: true,
+        list: [],
+        rest: '',
+        amount: ''
+      });
+    }
+  }
+
   render() {
     console.log(this.state.amount);
     return (
@@ -108,7 +106,6 @@ export default class home extends Component {
         <h1 className="title">Pecahan Mata Uang</h1>
         <form className="form" onSubmit={this.handleSubmit}>
           <input type="text" onChange={this.handleChange} />
-
           <input type="submit" disabled={this.state.show_err} value="Submit" />
           <h5 className="error">
             {this.state.show_err ? 'Invalid Input' : null}
