@@ -23,6 +23,9 @@ export default class home extends Component {
     let data = event.target.value;
     const match = /rp./g;
     const results = data.match(match);
+    let resultRegex = match.exec(data);
+    console.log(resultRegex);
+
     if (results || this._isNumber(data)) {
       const number = data.replace(/\D/g, '');
       const space = /[^\s]/;
@@ -39,7 +42,8 @@ export default class home extends Component {
       }
     } else {
       this.setState({
-        show_err: true
+        show_err: true,
+        list: []
       });
     }
   }
@@ -97,7 +101,7 @@ export default class home extends Component {
           <input type="text" onChange={this.handleChange} />
 
           <input type="submit" value="Submit" />
-          <p class="error">{this.state.show_err ? 'Invalid Input' : null}</p>
+          <h5 class="error">{this.state.show_err ? 'Invalid Input' : null}</h5>
         </form>
         <Table
           rest={this.state.rest}
