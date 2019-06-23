@@ -31,7 +31,8 @@ export default class home extends Component {
       const space = /[^\s]/;
       if (space.test(number)) {
         this.setState({
-          show_err: true
+          show_err: true,
+          rest: ''
         });
       }
       if (this._isNumber(number)) {
@@ -43,7 +44,8 @@ export default class home extends Component {
     } else {
       this.setState({
         show_err: true,
-        list: []
+        list: [],
+        rest: ''
       });
     }
   }
@@ -100,8 +102,10 @@ export default class home extends Component {
         <form className="form" onSubmit={this.handleSubmit}>
           <input type="text" onChange={this.handleChange} />
 
-          <input type="submit" value="Submit" />
-          <h5 class="error">{this.state.show_err ? 'Invalid Input' : null}</h5>
+          <input type="submit" disabled={this.state.show_err} value="Submit" />
+          <h5 className="error">
+            {this.state.show_err ? 'Invalid Input' : null}
+          </h5>
         </form>
         <Table
           rest={this.state.rest}

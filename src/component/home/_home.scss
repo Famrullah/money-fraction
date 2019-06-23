@@ -27,7 +27,7 @@
             margin: 10px;
         }
 
-        .disabled {
+        input[type="submit"]:disabled {
             opacity: 0.4;
             cursor: not-allowed
         }
