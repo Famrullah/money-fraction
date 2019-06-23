@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Table from '../../hoc/Table/table';
-import CurrencyFormat from 'react-currency-format';
 import './_home.scss';
 
 export default class home extends Component {
@@ -11,12 +10,38 @@ export default class home extends Component {
       amount: '',
       list: [],
       rest: '',
-      show: true
+      show_err: true
     };
-    // this.handleChange = this._handleChange.bind(this);
+    this.handleChange = this._handleChange.bind(this);
     this.handleSubmit = this._handleSubmit.bind(this);
     this._calc = this._calc.bind(this);
     this._formatIdr = this._formatIdr.bind(this);
+    this._isNumber = this._isNumber.bind(this);
+  }
+
+  _handleChange(event) {
+    let data = event.target.value;
+    const match = /rp./g;
+    const results = data.match(match);
+    if (results || this._isNumber(data)) {
+      const number = data.replace(/\D/g, '');
+      const space = /[^\s]/;
+      if (space.test(number)) {
+        this.setState({
+          show_err: true
+        });
+      }
+      if (this._isNumber(number)) {
+        this.setState({
+          show_err: false,
+          amount: number
+        });
+      }
+    } else {
+      this.setState({
+        show_err: true
+      });
+    }
   }
 
   _formatIdr(money) {
@@ -53,26 +78,26 @@ export default class home extends Component {
     return arr;
   }
 
+  _isNumber(str) {
+    const pattern = /^\d+$/;
+    return pattern.test(str);
+  }
+
   _handleSubmit(event) {
     event.preventDefault();
     this._calc();
   }
 
   render() {
+    console.log(this.state.amount);
     return (
       <div className="home-page">
         <h1 className="title">Pecahan Mata Uang</h1>
         <form className="form" onSubmit={this.handleSubmit}>
-          <CurrencyFormat
-            value={this.state.amount}
-            thousandSeparator={true}
-            prefix={'Rp'}
-            onValueChange={values => {
-              const { value } = values;
-              this.setState({ amount: value });
-            }}
-          />
+          <input type="text" onChange={this.handleChange} />
+
           <input type="submit" value="Submit" />
+          <p class="error">{this.state.show_err ? 'Invalid Input' : null}</p>
         </form>
         <Table
           rest={this.state.rest}
