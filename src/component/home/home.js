@@ -23,9 +23,6 @@ export default class home extends Component {
     let data = event.target.value;
     const match = /rp./g;
     const results = data.match(match);
-    let resultRegex = match.exec(data);
-    console.log(resultRegex);
-
     if (results || this._isNumber(data)) {
       const number = data.replace(/\D/g, '');
       const space = /[^\s]/;
