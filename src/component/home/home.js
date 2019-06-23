@@ -26,7 +26,7 @@ export default class home extends Component {
     if (results || this._isNumber(data)) {
       const number = data.replace(/\D/g, '');
       const space = /[^\s]/;
-      if (space.test(number)) {
+      if (!space.test(number)) {
         this.setState({
           show_err: true,
           rest: ''
@@ -36,6 +36,11 @@ export default class home extends Component {
         this.setState({
           show_err: false,
           amount: number
+        });
+      } else {
+        this.setState({
+          show_err: true,
+          rest: ''
         });
       }
     } else {
