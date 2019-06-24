@@ -18,7 +18,7 @@ export default class home extends Component {
     this._formatIdr = this._formatIdr.bind(this);
     this._isNumber = this._isNumber.bind(this);
     this._validation = this._validation.bind(this);
-    // this._isWhiteSpace = this._isWhiteSpace.bind(this);
+    this._numberValidation = this._numberValidation.bind(this);
   }
 
   _handleChange(event) {
@@ -48,7 +48,6 @@ export default class home extends Component {
       if (amount >= item) {
         const sheet = Number(amount / item);
         amount = amount % item;
-        console.log(this._formatIdr(item));
         arr.push({ fraction: item, sheet: Math.floor(sheet) });
         this.setState({
           list: arr,
@@ -70,25 +69,14 @@ export default class home extends Component {
     this._calc();
   }
 
+  // validation input value currency by rules
   _validation(value) {
     let data = value;
     const match = /rp./g;
     const results = data.match(match);
     if (results || this._isNumber(data)) {
       const number = data.replace(/rp./g, '');
-      if (this._isNumber(number)) {
-        this.setState({
-          show_err: false,
-          amount: number
-        });
-      } else {
-        this.setState({
-          show_err: true,
-          rest: '',
-          amount: '',
-          list: []
-        });
-      }
+      this._numberValidation(number);
     } else {
       this.setState({
         show_err: true,
@@ -99,8 +87,27 @@ export default class home extends Component {
     }
   }
 
+  // let data = value;
+  // const match = /rp./g;
+  // const results = data.match(match);
+  // if value number after replace "Rp."
+  _numberValidation(number) {
+    if (this._isNumber(number)) {
+      this.setState({
+        show_err: false,
+        amount: number
+      });
+    } else {
+      this.setState({
+        show_err: true,
+        rest: '',
+        amount: '',
+        list: []
+      });
+    }
+  }
+
   render() {
-    console.log(this.state.amount);
     return (
       <div className="home-page">
         <h1 className="title">Pecahan Mata Uang</h1>
